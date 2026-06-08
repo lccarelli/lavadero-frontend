@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoLavado Express</title>
+  <!-- Aplicar tema antes del primer render (evita flash). Se completa en TK-F-08 -->
+  <script>
+    try {
+      const t = localStorage.getItem('tema');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>AutoLavado Express</h1>
+    <p>Setup OK · esqueleto inicial del frontend</p>
+    <!-- TK-S-04: main.js pinta acá la respuesta del /health del backend -->
+    <div id="status">cargando...</div>
+  </main>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

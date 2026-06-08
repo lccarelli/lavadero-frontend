@@ -1,0 +1,14 @@
+{
+  "name": "lavadero-frontend",
+  "version": "1.0.0",
+  "description": "Frontend del cliente (HTML/CSS/JS vanilla) del TP integrador",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.0",
+    "vitest": "^2.1.1"
+  }
+}

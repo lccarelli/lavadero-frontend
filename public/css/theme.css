@@ -1,0 +1,18 @@
+/* Variables de color por tema. El toggle cambia data-theme en <html> (TK-F-08). */
+:root {
+  --bg: #ffffff;
+  --surface: #f4f4f5;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --border: #e5e7eb;
+}
+
+[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #1a1d23;
+  --text: #f4f4f5;
+  --muted: #9ca3af;
+  --accent: #60a5fa;
+  --border: #2a2e37;
+}
