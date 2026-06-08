@@ -42,3 +42,4 @@ Se corren fuera de Docker (Node 18+):
 npm install   # solo la primera vez
 npm test
 ```
+
