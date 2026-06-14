@@ -32,3 +32,8 @@ export function post(path, data) {
 export function health() {
   return request(`${BASE_URL}/health`);
 }
+
+// TK-F-01: lista las categorías (devuelve un array de { id, nombre, descripcion }).
+export function getCategorias() {
+  return get('/categorias');
+}
