@@ -1,9 +1,7 @@
 // Wrapper de fetch a la API del backend.
-// El navegador del cliente le pega al host (no al hostname interno del compose),
-// por eso la URL es localhost:3000, no el nombre del servicio "backend".
+// El navegador del cliente le pega al host => URL es localhost:3000
 export const API_URL = 'http://localhost:3000/api';
 
-// La base sin /api, para endpoints que no cuelgan de /api (ej: /health).
 const BASE_URL = API_URL.replace(/\/api$/, '');
 
 async function request(path, options = {}) {
@@ -28,7 +26,6 @@ export function post(path, data) {
   return request(path, { method: 'POST', body: JSON.stringify(data) });
 }
 
-// Helper de setup: pega al /health del backend (fuera de /api).
 export function health() {
   return request(`${BASE_URL}/health`);
 }
@@ -36,4 +33,12 @@ export function health() {
 // TK-F-01: lista las categorías (devuelve un array de { id, nombre, descripcion }).
 export function getCategorias() {
   return get('/categorias');
+}
+
+// TK-F-02: lista productos paginados. Devuelve { data, pagination }.
+export function getProductos({ categoria, activo = true, page = 1, limit = 8 } = {}) {
+  const params = new URLSearchParams({ page, limit });
+  if (categoria) params.set('categoria', categoria);
+  if (activo) params.set('activo', 'true');
+  return get(`/productos?${params.toString()}`);
 }
