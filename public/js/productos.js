@@ -2,6 +2,7 @@
 import { getCategorias, getProductos } from './api.js';
 import { mountHeader, setCartBadge } from './nav.js';
 import { obtenerUsuario, iniciarExpiracionPorInactividad } from './usuarioSesion.js';
+import { agregarAlCarrito, cantidadDeItems } from './carrito.js';
 
 const ICONO_CATEGORIA = { Lavados: 'local_car_wash', Accesorios: 'category' };
 const TEMAS = ['cyan', 'rose', 'amber'];
@@ -25,18 +26,15 @@ export function renderProductoCard({ nombre, descripcion, precio, imagen, tema, 
 
 const grid = document.getElementById('product-grid');
 const tabs = document.getElementById('category-tabs');
-let cartCount = 0;
 
-// El carrito real (sessionStorage) TODO en TK-F-05.
-function agregarAlCarrito(btn) {
-  cartCount += 1;
-  setCartBadge(cartCount);
-  const original = btn.innerHTML;
-  btn.classList.add('is-added');
-  btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> ¡Añadido!';
+// Feedback visual "¡Añadido!" en el botón.
+function mostrarFeedback(boton) {
+  const original = boton.innerHTML;
+  boton.classList.add('is-added');
+  boton.innerHTML = '<span class="material-symbols-outlined">check_circle</span> ¡Añadido!';
   setTimeout(() => {
-    btn.classList.remove('is-added');
-    btn.innerHTML = original;
+    boton.classList.remove('is-added');
+    boton.innerHTML = original;
   }, 1200);
 }
 
@@ -61,8 +59,18 @@ function pintarProductos(categoriaId, categoriaNombre) {
           })
         )
         .join('');
-      grid.querySelectorAll('.add-to-cart').forEach((btn) =>
-        btn.addEventListener('click', () => agregarAlCarrito(btn))
+      grid.querySelectorAll('.add-to-cart').forEach((boton, indice) =>
+        boton.addEventListener('click', () => {
+          const producto = items[indice];
+          agregarAlCarrito({
+            id: producto.id,
+            nombre: producto.nombre,
+            precio: Number(producto.precio),
+            categoria: producto.categoria?.nombre,
+          });
+          setCartBadge(cantidadDeItems());
+          mostrarFeedback(boton);
+        })
       );
     })
     .catch((err) => {
@@ -92,6 +100,7 @@ function pintarTabs(categorias) {
 }
 
 mountHeader('productos');
+setCartBadge(cantidadDeItems());
 
 // Saludo personalizado con el nombre del usuario (sesión con TTL de 5 min).
 const usuario = obtenerUsuario();
