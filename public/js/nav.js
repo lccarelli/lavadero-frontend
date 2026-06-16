@@ -19,10 +19,10 @@ export function renderHeader({ active = '' } = {}) {
     </a>
     <nav class="app-nav">${nav}</nav>
     <div class="header-actions">
-      <button class="icon-btn" aria-label="Carrito">
+      <a class="icon-btn" href="carrito.html" aria-label="Carrito">
         <span class="material-symbols-outlined">shopping_cart</span>
         <span class="cart-badge" id="cart-badge">0</span>
-      </button>
+      </a>
     </div>
   </div>`;
 }

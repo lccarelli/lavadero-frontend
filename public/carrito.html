@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito · AutoLavado Express</title>
+  <script>
+    try {
+      const t = localStorage.getItem('tema');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <header class="app-header" id="app-header"></header>
+
+  <main>
+    <div class="page">
+      <header class="page-head">
+        <h1 class="page-head__title">Tu carrito</h1>
+        <p class="page-head__subtitle">Revisá tus productos y finalizá tu pedido.</p>
+      </header>
+
+      <div id="cart-layout"></div>
+    </div>
+  </main>
+
+  <dialog class="modal" id="modal-confirmar">
+    <h2 class="modal__titulo">Confirmar compra</h2>
+    <p class="modal__texto">Vas a finalizar tu pedido por <strong id="modal-total">$0.00</strong>.</p>
+    <div class="modal__acciones">
+      <button class="btn-ghost" type="button" data-accion="cancelar">Cancelar</button>
+      <button class="btn-primary" type="button" data-accion="confirmar">Confirmar</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/carritoPagina.js"></script>
+</body>
+</html>
