@@ -42,3 +42,8 @@ export function getProductos({ categoria, activo = true, page = 1, limit = 8 } =
   if (activo) params.set('activo', 'true');
   return get(`/productos?${params.toString()}`);
 }
+
+// TK-F-05: crea (o encuentra) un usuario tipo cliente por nombre. Devuelve { id, nombre }.
+export function crearUsuario(nombre) {
+  return post('/usuarios', { nombre });
+}

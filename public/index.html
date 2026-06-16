@@ -3,26 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoLavado Express</title>
-  <!-- Aplicar tema antes del primer render (evita flash). Se completa en TK-F-08 -->
+  <title>Bienvenido · AutoLavado Express</title>
   <script>
     try {
       const t = localStorage.getItem('tema');
       if (t) document.documentElement.setAttribute('data-theme', t);
     } catch (e) {}
   </script>
-  <link rel="stylesheet" href="css/base.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/components.css" />
 </head>
 <body>
-  <main class="container">
-    <h1>AutoLavado Express</h1>
-    <p>Setup OK · esqueleto inicial del frontend</p>
-    <!-- TK-S-04: main.js pinta acá la respuesta del /health del backend -->
-    <div id="status">cargando...</div>
+  <header class="app-header" id="app-header"></header>
+
+  <main class="page-center">
+    <div class="welcome">
+      <section class="hero">
+        <h1 class="hero__title">¡Bienvenido/a!</h1>
+        <p class="hero__subtitle">Tu auto brillando en minutos.</p>
+      </section>
+
+      <div class="welcome-card">
+        <label class="welcome-card__label" for="input-nombre">Para empezar, decinos tu nombre</label>
+        <input class="text-input" id="input-nombre" type="text" placeholder="Escribí tu nombre" autocomplete="off" />
+        <p class="form-error hidden" id="error-nombre">El nombre debe tener al menos 2 caracteres.</p>
+
+        <button class="btn-primary" id="boton-continuar" type="button" disabled>
+          Continuar
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+
+        <a class="link-admin" href="http://localhost:3000/admin/login">
+          <span class="material-symbols-outlined">admin_panel_settings</span>
+          Acceso admin
+        </a>
+      </div>
+    </div>
   </main>
 
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/bienvenida.js"></script>
 </body>
 </html>
