@@ -1,6 +1,7 @@
 // Pantalla de productos. Header + tabs (categorías reales del backend) + grilla
 import { getCategorias, getProductos } from './api.js';
 import { mountHeader, setCartBadge } from './nav.js';
+import { obtenerUsuario, iniciarExpiracionPorInactividad } from './usuarioSesion.js';
 
 const ICONO_CATEGORIA = { Lavados: 'local_car_wash', Accesorios: 'category' };
 const TEMAS = ['cyan', 'rose', 'amber'];
@@ -91,6 +92,18 @@ function pintarTabs(categorias) {
 }
 
 mountHeader('productos');
+
+// Saludo personalizado con el nombre del usuario (sesión con TTL de 5 min).
+const usuario = obtenerUsuario();
+if (usuario) {
+  const tituloHero = document.getElementById('hero-title');
+  if (tituloHero) tituloHero.textContent = `Hola ${usuario.nombre}, elegí tu lavado`;
+}
+
+// Si pasan 5 minutos sin actividad, se borra la sesión y vuelve a la bienvenida.
+iniciarExpiracionPorInactividad(() => {
+  window.location.href = 'index.html';
+});
 
 getCategorias()
   .then((categorias) => {

@@ -14,7 +14,7 @@ export function renderHeader({ active = '' } = {}) {
   return `
   <div class="app-header__bar">
     <a class="brand" href="index.html">
-      <span class="brand__logo"><span class="material-symbols-outlined">local_car_wash</span></span>
+      <span class="brand__logo"><img src="assets/bubble_icon.png" alt="AutoLavado Express" /></span>
       <span class="brand__name">AutoLavado Express</span>
     </a>
     <nav class="app-nav">${nav}</nav>
