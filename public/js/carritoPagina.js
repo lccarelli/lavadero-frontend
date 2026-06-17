@@ -2,6 +2,8 @@
 // cantidades, eliminar items y ver el total. "Finalizar compra" abre el modal de
 // confirmación; el POST de la venta se conecta al hacer el backend de Venta (TK-F-05).
 import { mountHeader, setCartBadge } from './nav.js';
+import { crearVenta } from './api.js';
+import { obtenerUsuario } from './usuarioSesion.js';
 import {
   obtenerCarrito,
   cambiarCantidad,
@@ -9,6 +11,7 @@ import {
   eliminarDelCarrito,
   totalCarrito,
   cantidadDeItems,
+  vaciarCarrito,
 } from './carrito.js';
 
 const ICONO_CATEGORIA = { Lavados: 'local_car_wash', Accesorios: 'category' };
@@ -120,10 +123,28 @@ function abrirConfirmacion() {
 }
 
 modal.querySelector('[data-accion="cancelar"]').addEventListener('click', () => modal.close());
-modal.querySelector('[data-accion="confirmar"]').addEventListener('click', () => {
-  // TODO (TK-F-05 venta): POST /api/ventas con [{ producto_id, cantidad }], vaciar el
-  // carrito y redirigir al ticket. Se conecta al armar el backend de Venta.
-  modal.close();
+
+const botonConfirmar = modal.querySelector('[data-accion="confirmar"]');
+botonConfirmar.addEventListener('click', async () => {
+  const usuario = obtenerUsuario();
+  if (!usuario) {
+    window.location.href = 'index.html'; // sin sesión: volver a la bienvenida
+    return;
+  }
+  const items = obtenerCarrito().map((item) => ({ producto_id: item.id, cantidad: item.cantidad }));
+
+  botonConfirmar.disabled = true;
+  try {
+    const venta = await crearVenta({ usuario_id: usuario.id, items });
+    sessionStorage.setItem('ultimaVenta', JSON.stringify(venta));
+    vaciarCarrito();
+    window.location.href = 'ticket.html';
+  } catch (error) {
+    const errorEl = document.getElementById('modal-error');
+    errorEl.textContent = 'No se pudo finalizar la compra. Probá de nuevo.';
+    errorEl.classList.remove('hidden');
+    botonConfirmar.disabled = false;
+  }
 });
 
 render();

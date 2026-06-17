@@ -47,3 +47,9 @@ export function getProductos({ categoria, activo = true, page = 1, limit = 8 } =
 export function crearUsuario(nombre) {
   return post('/usuarios', { nombre });
 }
+
+// TK-F-05: crea la venta. body { usuario_id, items: [{ producto_id, cantidad }] }.
+// El total lo calcula el backend; devuelve la venta completa para el ticket.
+export function crearVenta({ usuario_id, items }) {
+  return post('/ventas', { usuario_id, items });
+}

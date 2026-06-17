@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carrito · AutoLavado Express</title>
+  <title>Ticket · AutoLavado Express</title>
   <script>
     try {
       const t = localStorage.getItem('tema');
@@ -22,26 +22,28 @@
   <header class="app-header" id="app-header"></header>
 
   <main>
-    <div class="page">
-      <header class="page-head">
-        <h1 class="page-head__title">Tu carrito</h1>
-        <p class="page-head__subtitle">Revisá tus productos y finalizá tu pedido.</p>
-      </header>
+    <div class="ticket-wrap">
+      <div class="ticket-success">
+        <span class="material-symbols-outlined ticket-success__icon">check_circle</span>
+        <h1 class="ticket-success__title">¡Compra exitosa!</h1>
+        <p class="ticket-success__subtitle">Tu auto te lo va a agradecer. Acá tenés tu comprobante.</p>
+      </div>
 
-      <div id="cart-layout"></div>
+      <div class="ticket" id="ticket"></div>
+
+      <div class="ticket-actions">
+        <button class="btn-primary" id="boton-pdf" type="button">
+          <span class="material-symbols-outlined">download</span> Descargar PDF
+        </button>
+        <button class="btn-ghost" id="boton-finalizar" type="button">
+          Finalizar <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
     </div>
   </main>
 
-  <dialog class="modal" id="modal-confirmar">
-    <h2 class="modal__titulo">Confirmar compra</h2>
-    <p class="modal__texto">Vas a finalizar tu pedido por <strong id="modal-total">$0.00</strong>.</p>
-    <p class="form-error hidden" id="modal-error"></p>
-    <div class="modal__acciones">
-      <button class="btn-ghost" type="button" data-accion="cancelar">Cancelar</button>
-      <button class="btn-primary" type="button" data-accion="confirmar">Confirmar</button>
-    </div>
-  </dialog>
-
-  <script type="module" src="js/carritoPagina.js"></script>
+  <!-- jsPDF por CDN para el ticket en PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script type="module" src="js/ticket.js"></script>
 </body>
 </html>
