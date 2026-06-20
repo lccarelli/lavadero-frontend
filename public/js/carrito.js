@@ -18,18 +18,18 @@ function guardarCarrito(items) {
 }
 
 // Agrega el producto; si ya estaba en el carrito, le suma 1 a la cantidad.
-export function agregarAlCarrito(producto) {
+export function agregarAlCarrito(producto, cantidad = 1) {
   const carrito = obtenerCarrito();
   const existente = carrito.find((item) => item.id === producto.id);
   if (existente) {
-    existente.cantidad += 1;
+    existente.cantidad += cantidad;
   } else {
     carrito.push({
       id: producto.id,
       nombre: producto.nombre,
       precio: Number(producto.precio),
       categoria: producto.categoria,
-      cantidad: 1,
+      cantidad,
     });
   }
   guardarCarrito(carrito);
