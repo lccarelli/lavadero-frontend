@@ -8,14 +8,16 @@ const ICONO_CATEGORIA = { Lavados: 'local_car_wash', Accesorios: 'category' };
 const TEMAS = ['cyan', 'rose', 'amber'];
 
 // HTML reutilizable de una card. Usa la imagen del producto si existe; si no muestra un icono.
-export function renderProductoCard({ nombre, descripcion, precio, imagen, tema, icon = 'local_car_wash' }) {
+export function renderProductoCard({ id, nombre, descripcion, precio, imagen, tema, icon = 'local_car_wash' }) {
   const media = imagen
     ? `<img src="${imagen}" alt="${nombre}">`
     : `<span class="material-symbols-outlined product-card__icon">${icon}</span>`;
   return `
   <article class="product-card product-card--${tema}">
-    <div class="product-card__media">${media}</div>
-    <h3 class="product-card__title">${nombre}</h3>
+    <a class="product-card__link" href="producto-detalle.html?id=${id}">
+      <div class="product-card__media">${media}</div>
+      <h3 class="product-card__title">${nombre}</h3>
+    </a>
     <p class="product-card__desc">${descripcion}</p>
     <span class="product-card__price">$${precio}</span>
     <button class="btn-clay add-to-cart" type="button">
@@ -50,6 +52,7 @@ function pintarProductos(categoriaId, categoriaNombre) {
       grid.innerHTML = items
         .map((producto, indice) =>
           renderProductoCard({
+            id: producto.id,
             nombre: producto.nombre,
             descripcion: producto.descripcion,
             precio: Number(producto.precio).toFixed(2),
