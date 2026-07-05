@@ -1,6 +1,8 @@
 // Header/nav compartido. Cualquier página con <header id="app-header"> lo usa.
 // Reutilizable: el HTML del header vive acá, no se repite en cada .html.
 
+import { toggleTema, temaActual } from './tema.js';
+
 const LINKS = [
   { href: 'index.html', label: 'Inicio', key: 'inicio' },
   { href: 'productos.html', label: 'Productos', key: 'productos' },
@@ -19,6 +21,9 @@ export function renderHeader({ active = '' } = {}) {
     </a>
     <nav class="app-nav">${nav}</nav>
     <div class="header-actions">
+      <button class="icon-btn" id="btn-tema" type="button" aria-label="Cambiar tema">
+        <span class="material-symbols-outlined" id="icono-tema">dark_mode</span>
+      </button>
       <a class="icon-btn" href="carrito.html" aria-label="Carrito">
         <span class="material-symbols-outlined">shopping_cart</span>
         <span class="cart-badge" id="cart-badge">0</span>
@@ -30,7 +35,18 @@ export function renderHeader({ active = '' } = {}) {
 // Inserta el header en la página. active = key del link a resaltar.
 export function mountHeader(active) {
   const contenedor = document.getElementById('app-header');
-  if (contenedor) contenedor.innerHTML = renderHeader({ active });
+  if (!contenedor) return;
+  contenedor.innerHTML = renderHeader({ active });
+
+  // El header ya está en el DOM: engancho el toggle de tema.
+  const btnTema = document.getElementById('btn-tema');
+  const iconoTema = document.getElementById('icono-tema');
+  if (btnTema && iconoTema) {
+    iconoTema.textContent = temaActual() === 'dark' ? 'light_mode' : 'dark_mode';
+    btnTema.addEventListener('click', () => {
+      iconoTema.textContent = toggleTema() === 'dark' ? 'light_mode' : 'dark_mode';
+    });
+  }
 }
 
 // TODO en TK-F-05; por ahora recibe el número a mostrar.)
