@@ -1,5 +1,5 @@
 // Pantalla de productos. Header + tabs (categorías reales del backend) + grilla
-import { getCategorias, getProductos } from './api.js';
+import { getCategorias, getProductos, urlImagen } from './api.js';
 import { formatearPrecio } from './formato.js';
 import { mountHeader, setCartBadge } from './nav.js';
 import { obtenerUsuario, iniciarExpiracionPorInactividad } from './usuarioSesion.js';
@@ -11,7 +11,7 @@ const TEMAS = ['cyan', 'rose', 'amber'];
 // HTML reutilizable de una card. Usa la imagen del producto si existe; si no muestra un icono.
 export function renderProductoCard({ id, nombre, descripcion, precio, imagen, tema, icon = 'local_car_wash' }) {
   const media = imagen
-    ? `<img src="${imagen}" alt="${nombre}">`
+    ? `<img src="${urlImagen(imagen)}" alt="${nombre}">`
     : `<span class="material-symbols-outlined product-card__icon">${icon}</span>`;
   return `
   <article class="product-card product-card--${tema}">
