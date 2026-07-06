@@ -41,13 +41,19 @@ function mostrarFeedback(boton) {
   }, 1200);
 }
 
-function pintarProductos(categoriaId, categoriaNombre) {
+// Recordamos la categoría actual para poder cambiar de página sin perderla.
+let ctxCategoria = { id: null, nombre: null };
+const POR_PAGINA = 6;
+
+function pintarProductos(categoriaId, categoriaNombre, pagina = 1) {
+  ctxCategoria = { id: categoriaId, nombre: categoriaNombre };
   grid.innerHTML = '<p class="grid-msg">Cargando...</p>';
-  getProductos({ categoria: categoriaId, activo: true, limit: 50 })
+  getProductos({ categoria: categoriaId, activo: true, page: pagina, limit: POR_PAGINA })
     .then((res) => {
       const items = res.data || [];
       if (!items.length) {
         grid.innerHTML = `<p class="grid-msg">No hay productos en ${categoriaNombre || 'esta categoría'} todavía.</p>`;
+        pintarPaginacion(null);
         return;
       }
       grid.innerHTML = items
@@ -77,11 +83,38 @@ function pintarProductos(categoriaId, categoriaNombre) {
           mostrarFeedback(boton);
         })
       );
+      pintarPaginacion(res.pagination);
     })
     .catch((err) => {
       console.error('No se pudieron cargar los productos:', err.message);
       grid.innerHTML = '<p class="grid-msg">No se pudieron cargar los productos.</p>';
     });
+}
+
+// Controles de paginación (prev / info / next). La paginación la calcula el backend
+// (findAndCountAll -> { data, pagination }); acá solo pedimos la página y pintamos.
+function pintarPaginacion(pagination) {
+  const cont = document.getElementById('pagination');
+  if (!cont) return;
+  if (!pagination || pagination.totalPages <= 1) {
+    cont.innerHTML = '';
+    return;
+  }
+  const { page, totalPages } = pagination;
+  cont.innerHTML = `
+    <button class="pagination__btn" type="button" data-accion="prev" ${page <= 1 ? 'disabled' : ''} aria-label="Anterior">
+      <span class="material-symbols-outlined">chevron_left</span>
+    </button>
+    <span class="pagination__info">Página ${page} de ${totalPages}</span>
+    <button class="pagination__btn" type="button" data-accion="next" ${page >= totalPages ? 'disabled' : ''} aria-label="Siguiente">
+      <span class="material-symbols-outlined">chevron_right</span>
+    </button>`;
+  cont.querySelector('[data-accion="prev"]').addEventListener('click', () =>
+    pintarProductos(ctxCategoria.id, ctxCategoria.nombre, page - 1)
+  );
+  cont.querySelector('[data-accion="next"]').addEventListener('click', () =>
+    pintarProductos(ctxCategoria.id, ctxCategoria.nombre, page + 1)
+  );
 }
 
 function pintarTabs(categorias) {

@@ -569,3 +569,25 @@
   color: var(--outline); text-transform: uppercase; letter-spacing: 0.04em;
 }
 #boton-agregar { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; }
+
+/* ---------- Paginación ---------- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+.pagination__btn {
+  width: 44px; height: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-full);
+  background: var(--card-bg);
+  color: var(--primary);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.pagination__btn:hover:not(:disabled) { background: var(--surface-container); }
+.pagination__btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pagination__info { font-weight: 700; color: var(--on-surface-variant); }
