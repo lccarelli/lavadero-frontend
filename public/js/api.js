@@ -4,6 +4,13 @@ export const API_URL = 'http://localhost:3000/api';
 
 const BASE_URL = API_URL.replace(/\/api$/, '');
 
+// Convierte el path de imagen del backend (/uploads/..) en URL absoluta:
+// el frontend (nginx :8080) no sirve /uploads; las imágenes viven en el backend.
+export function urlImagen(path) {
+  if (!path) return '';
+  return /^https?:\/\//.test(path) ? path : `${BASE_URL}${path}`;
+}
+
 async function request(path, options = {}) {
   const isAbsolute = /^https?:\/\//.test(path);
   const url = isAbsolute ? path : `${API_URL}${path}`;

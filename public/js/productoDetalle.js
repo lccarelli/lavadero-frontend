@@ -1,7 +1,7 @@
 // Pantalla de detalle de un producto. Lee el id de la URL (?id=N), pide el producto
 // al backend y lo muestra; permite elegir cantidad y agregarlo al carrito.
 import { mountHeader, setCartBadge } from './nav.js';
-import { getProducto } from './api.js';
+import { getProducto, urlImagen } from './api.js';
 import { agregarAlCarrito, cantidadDeItems } from './carrito.js';
 
 const ICONO_CATEGORIA = { Lavados: 'local_car_wash', Accesorios: 'category' };
@@ -35,7 +35,7 @@ function formatearPrecio(valor) {
 function renderDetalle(producto) {
   const categoria = producto.categoria?.nombre;
   const media = producto.imagen
-    ? `<img src="${producto.imagen}" alt="${producto.nombre}">`
+    ? `<img src="${urlImagen(producto.imagen)}" alt="${producto.nombre}">`
     : `<span class="material-symbols-outlined detalle__icon">${ICONO_CATEGORIA[categoria] || 'local_car_wash'}</span>`;
 
   contenedor.innerHTML = `

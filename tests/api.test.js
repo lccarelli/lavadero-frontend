@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { get, API_URL } from '../public/js/api.js';
+import { get, API_URL, urlImagen } from '../public/js/api.js';
 
 describe('api.js', () => {
   beforeEach(() => {
@@ -29,5 +29,20 @@ describe('api.js', () => {
     }));
 
     await expect(get('/productos/999')).rejects.toThrow('No encontrado');
+  });
+});
+
+describe('urlImagen', () => {
+  it('prefija el path relativo con el origen del backend', () => {
+    expect(urlImagen('/uploads/foto.jpg')).toBe('http://localhost:3000/uploads/foto.jpg');
+  });
+
+  it('deja las URLs absolutas como están', () => {
+    expect(urlImagen('https://cdn.com/foto.jpg')).toBe('https://cdn.com/foto.jpg');
+  });
+
+  it('devuelve string vacío si no hay imagen', () => {
+    expect(urlImagen(null)).toBe('');
+    expect(urlImagen('')).toBe('');
   });
 });
