@@ -1,5 +1,6 @@
 // Pantalla de productos. Header + tabs (categorías reales del backend) + grilla
 import { getCategorias, getProductos } from './api.js';
+import { formatearPrecio } from './formato.js';
 import { mountHeader, setCartBadge } from './nav.js';
 import { obtenerUsuario, iniciarExpiracionPorInactividad } from './usuarioSesion.js';
 import { agregarAlCarrito, cantidadDeItems } from './carrito.js';
@@ -19,7 +20,7 @@ export function renderProductoCard({ id, nombre, descripcion, precio, imagen, te
       <h3 class="product-card__title">${nombre}</h3>
     </a>
     <p class="product-card__desc">${descripcion}</p>
-    <span class="product-card__price">$${precio}</span>
+    <span class="product-card__price">${formatearPrecio(precio)}</span>
     <button class="btn-clay add-to-cart" type="button">
       <span class="material-symbols-outlined">add_circle</span> Añadir al carrito
     </button>

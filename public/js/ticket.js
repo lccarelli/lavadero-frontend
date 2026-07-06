@@ -1,6 +1,7 @@
 // Pantalla del ticket. Lee la venta recién creada de sessionStorage ('ultimaVenta'),
 // la muestra, permite descargarla en PDF y finalizar (limpia el estado y vuelve al inicio).
 import { mountHeader, setCartBadge } from './nav.js';
+import { formatearPrecio } from './formato.js';
 
 mountHeader('');
 setCartBadge(0); // el carrito quedó vacío tras la compra
@@ -24,10 +25,6 @@ function leerVenta() {
   } catch (error) {
     return null;
   }
-}
-
-function formatearPrecio(valor) {
-  return `$${Number(valor).toFixed(2)}`;
 }
 
 function formatearFecha(iso) {
