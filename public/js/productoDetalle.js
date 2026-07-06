@@ -76,7 +76,7 @@ function renderDetalle(producto) {
   });
   document.getElementById('boton-agregar').addEventListener('click', () => {
     agregarAlCarrito(
-      { id: producto.id, nombre: producto.nombre, precio: producto.precio, categoria },
+      { id: producto.id, nombre: producto.nombre, precio: producto.precio, categoria, imagen: producto.imagen },
       cantidad
     );
     setCartBadge(cantidadDeItems());
