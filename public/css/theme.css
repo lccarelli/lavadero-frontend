@@ -32,6 +32,7 @@
 
   /* "Blanco" de las cards */
   --card-bg: #ffffff;
+  --card-border: rgba(255, 255, 255, 0.8);
 
   /* Acentos por card/categoría */
   --cyan: #0891b2;  --cyan-dark: #0e7490;  --cyan-soft: #ecfeff;
@@ -53,21 +54,23 @@
 }
 
 [data-theme="dark"] {
-  --primary: #9bcbff;
-  --on-primary: #003355;
-  --primary-container: #004a7a;
-  --on-primary-container: #d0e4ff;
+  /* Azul noche: superficies con tinte navy, primary celeste (color de marca). */
+  --primary: #8fc7ff;
+  --on-primary: #06263f;
+  --primary-container: #1d3a58;
+  --on-primary-container: #cfe4ff;
 
-  --surface: #111417;
-  --surface-container-low: #181b1e;
-  --surface-container: #1e2124;
-  --surface-container-high: #282b2e;
-  --on-surface: #e2e3e5;
-  --on-surface-variant: #c0c7d0;
-  --outline: #8a929c;
-  --outline-variant: #404751;
+  --surface: #0d1420;
+  --surface-container-low: #121a28;
+  --surface-container: #182234;
+  --surface-container-high: #212d42;
+  --on-surface: #e6ebf2;
+  --on-surface-variant: #b7c2d4;
+  --outline: #7d8aa0;
+  --outline-variant: #2c3a52;
 
-  --card-bg: #1e2124;
+  --card-bg: #162032;
+  --card-border: rgba(255, 255, 255, 0.08);
 
   --cyan-soft: #06343d;
   --rose-soft: #3a1620;
