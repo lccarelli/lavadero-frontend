@@ -2,6 +2,7 @@
 // al backend y lo muestra; permite elegir cantidad y agregarlo al carrito.
 import { mountHeader, setCartBadge } from './nav.js';
 import { getProducto, urlImagen } from './api.js';
+import { formatearPrecio } from './formato.js';
 import { agregarAlCarrito, cantidadDeItems } from './carrito.js';
 
 const ICONO_CATEGORIA = { Lavados: 'local_car_wash', Accesorios: 'category' };
@@ -26,10 +27,6 @@ if (!id) {
 
 function mensaje(texto) {
   return `<p class="grid-msg">${texto} <a href="productos.html">Ver productos</a></p>`;
-}
-
-function formatearPrecio(valor) {
-  return `$${Number(valor).toFixed(2)}`;
 }
 
 function renderDetalle(producto) {

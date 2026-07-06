@@ -3,6 +3,7 @@
 // confirmación; el POST de la venta se conecta al hacer el backend de Venta (TK-F-05).
 import { mountHeader, setCartBadge } from './nav.js';
 import { crearVenta } from './api.js';
+import { formatearPrecio } from './formato.js';
 import { obtenerUsuario } from './usuarioSesion.js';
 import {
   obtenerCarrito,
@@ -20,10 +21,6 @@ mountHeader('');
 
 const contenedor = document.getElementById('cart-layout');
 const modal = document.getElementById('modal-confirmar');
-
-function formatearPrecio(valor) {
-  return `$${valor.toFixed(2)}`;
-}
 
 function renderItem(item) {
   const subtotal = item.precio * item.cantidad;
