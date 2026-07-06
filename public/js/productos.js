@@ -71,6 +71,7 @@ function pintarProductos(categoriaId, categoriaNombre) {
             nombre: producto.nombre,
             precio: Number(producto.precio),
             categoria: producto.categoria?.nombre,
+            imagen: producto.imagen,
           });
           setCartBadge(cantidadDeItems());
           mostrarFeedback(boton);

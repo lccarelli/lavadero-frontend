@@ -2,7 +2,7 @@
 // cantidades, eliminar items y ver el total. "Finalizar compra" abre el modal de
 // confirmación; el POST de la venta se conecta al hacer el backend de Venta (TK-F-05).
 import { mountHeader, setCartBadge } from './nav.js';
-import { crearVenta } from './api.js';
+import { crearVenta, urlImagen } from './api.js';
 import { formatearPrecio } from './formato.js';
 import { obtenerUsuario } from './usuarioSesion.js';
 import {
@@ -28,6 +28,7 @@ function renderItem(item) {
   <div class="cart-item" data-id="${item.id}">
     <div class="cart-item__media">
       <span class="material-symbols-outlined">${ICONO_CATEGORIA[item.categoria] || 'local_car_wash'}</span>
+      ${item.imagen ? `<img src="${urlImagen(item.imagen)}" alt="${item.nombre}" onerror="this.remove()">` : ''}
     </div>
     <div class="cart-item__info">
       <h3 class="cart-item__nombre">${item.nombre}</h3>

@@ -29,6 +29,7 @@ export function agregarAlCarrito(producto, cantidad = 1) {
       nombre: producto.nombre,
       precio: Number(producto.precio),
       categoria: producto.categoria,
+      imagen: producto.imagen,
       cantidad,
     });
   }
