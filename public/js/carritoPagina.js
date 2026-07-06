@@ -1,6 +1,6 @@
 // Pantalla del carrito. Renderiza el carrito (sessionStorage) y permite modificar
-// cantidades, eliminar items y ver el total. "Finalizar compra" abre el modal de
-// confirmación; el POST de la venta se conecta al hacer el backend de Venta (TK-F-05).
+// cantidades, eliminar items y ver el total. "Finalizar compra" crea la venta
+// (POST /api/ventas) y lleva directo al ticket.
 import { mountHeader, setCartBadge } from './nav.js';
 import { crearVenta, urlImagen } from './api.js';
 import { formatearPrecio } from './formato.js';
@@ -20,7 +20,6 @@ const ICONO_CATEGORIA = { Lavados: 'local_car_wash', Accesorios: 'category' };
 mountHeader('');
 
 const contenedor = document.getElementById('cart-layout');
-const modal = document.getElementById('modal-confirmar');
 
 function renderItem(item) {
   const subtotal = item.precio * item.cantidad;
@@ -112,18 +111,11 @@ function render() {
     });
   });
 
-  document.getElementById('boton-finalizar').addEventListener('click', abrirConfirmacion);
+  document.getElementById('boton-finalizar').addEventListener('click', finalizarCompra);
 }
 
-function abrirConfirmacion() {
-  document.getElementById('modal-total').textContent = formatearPrecio(totalCarrito());
-  modal.showModal();
-}
-
-modal.querySelector('[data-accion="cancelar"]').addEventListener('click', () => modal.close());
-
-const botonConfirmar = modal.querySelector('[data-accion="confirmar"]');
-botonConfirmar.addEventListener('click', async () => {
+// Al finalizar: crea la venta y va directo al ticket (sin modal de confirmación).
+async function finalizarCompra() {
   const usuario = obtenerUsuario();
   if (!usuario) {
     window.location.href = 'index.html'; // sin sesión: volver a la bienvenida
@@ -131,18 +123,17 @@ botonConfirmar.addEventListener('click', async () => {
   }
   const items = obtenerCarrito().map((item) => ({ producto_id: item.id, cantidad: item.cantidad }));
 
-  botonConfirmar.disabled = true;
+  const boton = document.getElementById('boton-finalizar');
+  boton.disabled = true;
   try {
     const venta = await crearVenta({ usuario_id: usuario.id, items });
     sessionStorage.setItem('ultimaVenta', JSON.stringify(venta));
     vaciarCarrito();
     window.location.href = 'ticket.html';
   } catch (error) {
-    const errorEl = document.getElementById('modal-error');
-    errorEl.textContent = 'No se pudo finalizar la compra. Probá de nuevo.';
-    errorEl.classList.remove('hidden');
-    botonConfirmar.disabled = false;
+    alert('No se pudo finalizar la compra. Probá de nuevo.');
+    boton.disabled = false;
   }
-});
+}
 
 render();
