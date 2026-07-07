@@ -4,10 +4,13 @@
   "description": "Frontend del cliente (HTML/CSS/JS vanilla) del TP integrador",
   "type": "module",
   "scripts": {
+    "start": "http-server public -p 8080 -c-1",
+    "dev": "http-server public -p 8080 -c-1",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "devDependencies": {
+    "http-server": "^14.1.1",
     "jsdom": "^25.0.0",
     "vitest": "^2.1.1"
   }
